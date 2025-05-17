@@ -1,4 +1,3 @@
-
 import { pool } from '../db.js';
 
 // Obtener una compra específica por id_compra
@@ -178,4 +177,3 @@ export const actualizarCompra = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al actualizar la compra', error: error.message });
   }
 };
-

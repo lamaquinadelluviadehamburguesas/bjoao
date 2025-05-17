@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import { obtenerDetallesCompra } from '../controllers/detalles_compras.controller.js';
 

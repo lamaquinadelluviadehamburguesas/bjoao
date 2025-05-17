@@ -22,4 +22,3 @@ router.post('/registrarcompra', registrarCompra);
 router.patch('/actualizarcompra/:id_compra', actualizarCompra);
 
 export default router;
-

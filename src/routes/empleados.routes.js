@@ -18,5 +18,4 @@ router.delete('/eliminarempleado/:id', eliminarEmpleado);
 // Ruta para actualizar un empleado por su ID
 router.patch('/actualizarempleado/:id', actualizarEmpleado);
 
-
 export default router;

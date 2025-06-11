@@ -54,7 +54,23 @@ export const registrarCategoria = async (req, res) => {
 // Eliminar una categoría por su ID
 export const eliminarCategoria = async (req, res) => {
   try {
-    const [result] = await pool.query('DELETE FROM categorias WHERE id_categoria = ?', [req.params.id]);
+    // Primero verificamos si hay productos que usan esta categoría
+    const [productos] = await pool.query(
+      'SELECT COUNT(*) as count FROM productos WHERE id_categoria = ?',
+      [req.params.id]
+    );
+
+    if (productos[0].count > 0) {
+      return res.status(400).json({
+        mensaje: 'No se puede eliminar la categoría porque hay productos asociados a ella. Primero debe reasignar o eliminar los productos.'
+      });
+    }
+
+    // Si no hay productos asociados, procedemos con la eliminación
+    const [result] = await pool.query(
+      'DELETE FROM categorias WHERE id_categoria = ?',
+      [req.params.id]
+    );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({
@@ -62,11 +78,15 @@ export const eliminarCategoria = async (req, res) => {
       });
     }
 
-    res.status(204).send(); // Respuesta sin contenido para indicar éxito
+    // Enviamos una respuesta con estado 200 y un mensaje de éxito
+    return res.status(200).json({
+      mensaje: 'Categoría eliminada correctamente'
+    });
   } catch (error) {
+    console.error('Error al eliminar categoría:', error);
     return res.status(500).json({
       mensaje: 'Ha ocurrido un error al eliminar la categoría.',
-      error: error
+      error: error.message
     });
   }
 };

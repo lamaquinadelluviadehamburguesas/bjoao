@@ -1,5 +1,4 @@
-// controllers/ia.controller.js
-import { pool2 } from '../db.js'; // Ajusta la ruta según tu configuración
+import { pool2 } from '../db.js';
 
 export const consultarConIA = async (req, res) => {
   try {
@@ -21,4 +20,4 @@ export const consultarConIA = async (req, res) => {
       error: error.message,
     });
   }
-};
+}; 
